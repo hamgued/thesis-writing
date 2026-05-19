@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Thesis Writing — Student Guidebook · LAB</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:        #1a56db;
+  --blue-light:  #e8f0fe;
+  --blue-dark:   #1e3a8a;
+  --green:       #057a55;
+  --green-light: #def7ec;
+  --yellow:      #c27803;
+  --yellow-light:#fdf6b2;
+  --orange:      #c2500a;
+  --purple:      #7c3aed;
+  --purple-light:#ede9fe;
+  --red:         #dc2626;
+  --red-light:   #fee2e2;
+  --gray-50:     #f9fafb;
+  --gray-100:    #f3f4f6;
+  --gray-200:    #e5e7eb;
+  --gray-400:    #9ca3af;
+  --gray-600:    #4b5563;
+  --gray-700:    #374151;
+  --gray-800:    #1f2937;
+  --gray-900:    #111827;
+  --radius:      8px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--gray-800);
+  background: var(--gray-50);
+}
+
+/* ── SITE HEADER ── */
+.site-header {
+  background: white;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 10px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+}
+.site-header .course { font-size: 13px; font-weight: 600; color: var(--gray-600); }
+.site-header .inst   { font-size: 12px; color: var(--gray-400); margin-top: 1px; }
+.site-header a { color: var(--blue); text-decoration: none; }
+.site-header a:hover { text-decoration: underline; }
+.toc-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1a56db 60%, #2563eb 100%);
+  color: white;
+  padding: 44px 24px 36px;
+  text-align: center;
+}
+.hero h1 { font-size: clamp(20px, 4vw, 28px); font-weight: 700; margin-bottom: 8px; }
+.hero .subtitle { font-size: 14px; opacity: .75; margin-bottom: 18px; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 18px; }
+.hero-badge {
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.hero-credit { font-size: 11px; opacity: .5; }
+.hero-credit a { color: white; }
+
+/* ── MOBILE TOC ── */
+.mobile-toc-panel {
+  display: none;
+  background: white;
+  border-bottom: 2px solid var(--gray-200);
+  padding: 16px 20px 20px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+.mobile-toc-panel.open { display: block; }
+.mobile-toc-group { margin-bottom: 14px; }
+.mobile-toc-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--gray-400);
+  margin-bottom: 5px; display: block;
+}
+.mobile-toc-link {
+  display: block; padding: 4px 0;
+  font-size: 13px; color: var(--gray-700); text-decoration: none;
+}
+.mobile-toc-link:hover { color: var(--blue); }
+
+/* ── LAYOUT ── */
+.guidebook-layout {
+  display: flex;
+  max-width: 1120px;
+  margin: 0 auto;
+  align-items: flex-start;
+  padding: 0 20px;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 236px; min-width: 236px;
+  position: sticky; top: 52px;
+  max-height: calc(100vh - 54px);
+  overflow-y: auto;
+  padding: 24px 0 48px;
+  border-right: 1px solid var(--gray-200);
+  background: white;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-200) transparent;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 2px; }
+
+.toc-group { margin-bottom: 16px; }
+.toc-group-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gray-400);
+  padding: 0 16px 5px; display: block;
+}
+.toc-link {
+  display: block; padding: 5px 16px 5px 22px;
+  font-size: 12.5px; color: var(--gray-700);
+  text-decoration: none; border-left: 2px solid transparent;
+  line-height: 1.4;
+  transition: color .12s, background .12s, border-color .12s;
+}
+.toc-link:hover { color: var(--blue); background: var(--blue-light); }
+.toc-link.active {
+  color: var(--blue); background: var(--blue-light);
+  border-left-color: var(--blue); font-weight: 600;
+}
+
+/* ── MAIN CONTENT ── */
+.main-content {
+  flex: 1; min-width: 0;
+  padding: 40px 0 80px 40px;
+}
+
+/* ── SECTIONS ── */
+.content-section {
+  margin-bottom: 60px;
+  scroll-margin-top: 68px;
+}
+.subsection { margin-top: 36px; scroll-margin-top: 68px; }
+
+.section-heading {
+  font-size: 21px; font-weight: 700; color: var(--gray-900);
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--blue-light);
+  margin-bottom: 6px;
+}
+.section-tag {
+  display: inline-block; background: var(--blue); color: white;
+  border-radius: 4px; font-size: 11px; font-weight: 700;
+  padding: 2px 8px; margin-right: 8px;
+  vertical-align: middle; position: relative; top: -2px;
+}
+.section-intro {
+  font-size: 14px; color: var(--gray-600);
+  margin-bottom: 24px; margin-top: 8px; line-height: 1.7;
+}
+.subsection-heading {
+  font-size: 15px; font-weight: 700; color: var(--gray-800); margin-bottom: 10px;
+}
+.eyebrow {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--gray-600);
+  margin: 24px 0 10px; padding-bottom: 7px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+/* ── CALLOUTS ── */
+.callout {
+  border-radius: var(--radius); padding: 11px 15px;
+  margin: 12px 0; font-size: 13.5px;
+  display: flex; gap: 10px; line-height: 1.6;
+}
+.callout.info    { background: var(--blue-light);    border-left: 3px solid var(--blue);   color: #1e3a8a; }
+.callout.warn    { background: var(--yellow-light);  border-left: 3px solid var(--yellow); color: #78350f; }
+.callout.success { background: var(--green-light);   border-left: 3px solid var(--green);  color: #064e3b; }
+.callout.tip     { background: #e8f6f9;              border-left: 3px solid #4a8fa0;       color: #1a4a56; }
+.callout.error   { background: var(--red-light);     border-left: 3px solid var(--red);    color: #7f1d1d; }
+.callout .ico    { flex-shrink: 0; margin-top: 1px; }
+.callout p + p   { margin-top: 6px; }
+
+/* ── RULE CARDS ── */
+.rule-card {
+  background: white; border: 1px solid var(--gray-200);
+  border-radius: var(--radius); padding: 14px 18px; margin-bottom: 10px;
+}
+.rule-card-title { font-size: 14px; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
+.rule-card p, .rule-card li { font-size: 13.5px; color: var(--gray-700); line-height: 1.6; margin-bottom: 4px; }
+.rule-card ul { padding-left: 18px; }
+.rule-card ol { padding-left: 18px; }
+
+/* ── COMPARE BOXES ── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.compare-box { border-radius: var(--radius); padding: 11px 14px; font-size: 13px; line-height: 1.6; }
+.compare-box .lbl {
+  font-size: 10px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; display: block; margin-bottom: 5px; opacity: .75;
+}
+.compare-box.good { background: var(--green-light); border: 1px solid #86efac; color: #064e3b; }
+.compare-box.bad  { background: var(--red-light);   border: 1px solid #fca5a5; color: #7f1d1d; }
+.compare-box code {
+  font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+  background: rgba(0,0,0,.06); border-radius: 3px; padding: 1px 4px; border: none;
+}
+
+/* ── EXAMPLE ITEMS ── */
+.example-item {
+  background: var(--gray-100); border: 1px solid var(--gray-200);
+  border-radius: 6px; padding: 8px 13px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+  line-height: 1.65; margin-bottom: 6px;
+}
+.example-item .hl  { color: var(--blue); font-weight: 700; }
+.example-item .grn { color: var(--green); font-weight: 700; }
+.example-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gray-600); margin: 14px 0 7px; }
+
+/* ── TABLES ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0; }
+.data-table th {
+  background: var(--gray-100); text-align: left; padding: 8px 12px;
+  font-weight: 600; color: var(--gray-700); border-bottom: 2px solid var(--gray-200);
+}
+.data-table td { padding: 8px 12px; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--gray-50); }
+.data-table code {
+  font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+  background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 3px; padding: 1px 4px;
+}
+
+/* ── CHIPS ── */
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.verb-chip { border-radius: 999px; padding: 3px 11px; font-size: 12px; font-weight: 600; display: inline-block; }
+.verb-chip.tent { background: var(--yellow-light); color: #78350f; border: 1px solid #fcd34d; }
+.verb-chip.neut { background: var(--blue-light);   color: var(--blue-dark); border: 1px solid #93c5fd; }
+.verb-chip.str  { background: var(--green-light);  color: #064e3b; border: 1px solid #6ee7b7; }
+
+.tense-badge {
+  display: inline-block; border-radius: 4px; padding: 2px 8px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+}
+.tense-badge.past { background: var(--yellow-light); color: #78350f; }
+.tense-badge.pres { background: var(--blue-light);   color: var(--blue-dark); }
+.tense-badge.perf { background: var(--purple-light); color: #5b21b6; }
+.tense-badge.fut  { background: var(--green-light);  color: #064e3b; }
+
+/* ── STRUCTURE LIST ── */
+.struct-list { margin: 12px 0; }
+.struct-item {
+  display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px;
+  background: white; border: 1px solid var(--gray-200);
+  border-radius: var(--radius); margin-bottom: 6px;
+}
+.struct-item .num {
+  background: var(--blue); color: white; border-radius: 4px;
+  min-width: 26px; height: 26px; display: flex; align-items: center;
+  justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.struct-item .body { flex: 1; }
+.struct-item .name { font-size: 14px; font-weight: 700; color: var(--gray-800); }
+.struct-item .note { font-size: 12.5px; color: var(--gray-600); margin-top: 2px; }
+
+/* ── QUICK REFERENCE TENSE ── */
+.quick-ref-row {
+  display: flex; gap: 0; border: 1px solid var(--gray-200);
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 6px;
+}
+.quick-ref-section {
+  background: var(--gray-800); color: white; font-size: 12px; font-weight: 700;
+  padding: 8px 14px; min-width: 160px; display: flex; align-items: center;
+}
+.quick-ref-tenses {
+  background: white; flex: 1; padding: 8px 14px; font-size: 13px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+
+/* ── SIGNPOST CARD ── */
+.signpost-card {
+  background: white; border: 1px solid var(--gray-200);
+  border-radius: var(--radius); padding: 14px 18px; margin-bottom: 10px;
+}
+.signpost-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.signpost-title  { font-size: 14px; font-weight: 700; color: var(--gray-800); }
+.signpost-words  { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.sp-word {
+  background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 4px;
+  padding: 2px 10px; font-size: 13px; font-weight: 600; color: var(--gray-800);
+  font-family: 'JetBrains Mono', monospace;
+}
+.signpost-eg { font-size: 13px; color: var(--gray-600); line-height: 1.6; margin-bottom: 4px; }
+
+/* ── REFERENCE FORMAT ── */
+.ref-format {
+  background: var(--gray-900); color: #e2e8f0; border-radius: var(--radius);
+  padding: 13px 17px; font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; line-height: 1.75; margin: 8px 0; overflow-x: auto;
+}
+.ref-format .ph { color: #fde68a; }
+.ref-format .cm { color: #64748b; }
+
+/* ── FEEDBACK TABLE (Poor / Good) ── */
+.fb-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+.fb-table th {
+  padding: 7px 14px; font-size: 11px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.fb-table th:first-child { background: #fee2e2; color: #7f1d1d; border-radius: var(--radius) 0 0 0; }
+.fb-table th:last-child  { background: var(--green-light); color: #064e3b; border-radius: 0 var(--radius) 0 0; }
+.fb-table td {
+  padding: 8px 14px; vertical-align: top; border-bottom: 1px solid var(--gray-100);
+  line-height: 1.6; font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+}
+.fb-table td:first-child { background: #fff5f5; color: var(--gray-800); border-right: 1px solid var(--gray-100); }
+.fb-table td:last-child  { background: #f0fdf4; color: var(--gray-800); }
+.fb-table tr:last-child td:first-child { border-radius: 0 0 0 var(--radius); }
+.fb-table tr:last-child td:last-child  { border-radius: 0 0 var(--radius) 0; }
+.fb-table tr:last-child td { border-bottom: none; }
+
+/* ── TOOL LINKS ── */
+.tool-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.tool-link {
+  background: var(--blue-light); color: var(--blue); border: 1px solid #93c5fd;
+  border-radius: var(--radius); padding: 6px 14px; font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: background .12s;
+}
+.tool-link:hover { background: #c7d9fd; text-decoration: none; }
+
+/* ── CODE INLINE ── */
+code {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  background: var(--gray-100); border: 1px solid var(--gray-200);
+  border-radius: 3px; padding: 1px 5px; color: var(--gray-900);
+}
+
+/* ── FOOTER ── */
+.page-footer {
+  text-align: center; padding: 24px; font-size: 12px;
+  color: var(--gray-400); border-top: 1px solid var(--gray-200); margin-top: 24px;
+}
+.page-footer a { color: var(--gray-600); }
+
+/* ── PROSE ── */
+p { margin-bottom: 10px; color: var(--gray-700); font-size: 14px; }
+.main-content ul { padding-left: 20px; }
+.main-content li { font-size: 14px; color: var(--gray-700); margin-bottom: 4px; line-height: 1.6; }
+strong { color: var(--gray-800); }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 820px) {
+  .sidebar { display: none; }
+  .toc-toggle { display: block; }
+  .guidebook-layout { flex-direction: column; padding: 0; }
+  .main-content { padding: 24px 16px 60px; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .quick-ref-row { flex-direction: column; }
+  .quick-ref-section { min-width: auto; }
+  .fb-table { font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── SITE HEADER ── -->
+<header class="site-header">
+  <div>
+    <div class="course">Academic English Writing &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/hagu1/" target="_blank">Hamid Guedra</a></div>
+    <div class="inst"><a href="https://lab.fi/en" target="_blank">LAB University of Applied Sciences</a></div>
+  </div>
+  <button class="toc-toggle" id="tocToggle">☰ Contents</button>
+</header>
+
+<!-- ── MOBILE TOC ── -->
+<div class="mobile-toc-panel" id="mobileToc">
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">How to Use</span>
+    <a class="mobile-toc-link" href="#about" onclick="closeMobileToc()">About This Guide</a>
+    <a class="mobile-toc-link" href="#grading" onclick="closeMobileToc()">How Your Writing Is Graded</a>
+  </div>
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">Thesis Structure</span>
+    <a class="mobile-toc-link" href="#structure-overview" onclick="closeMobileToc()">Sections at a Glance</a>
+    <a class="mobile-toc-link" href="#structure-abstract" onclick="closeMobileToc()">Abstract</a>
+    <a class="mobile-toc-link" href="#structure-intro" onclick="closeMobileToc()">Introduction</a>
+    <a class="mobile-toc-link" href="#structure-body" onclick="closeMobileToc()">Main Body</a>
+    <a class="mobile-toc-link" href="#structure-summary" onclick="closeMobileToc()">Summary &amp; Discussion</a>
+    <a class="mobile-toc-link" href="#structure-refs" onclick="closeMobileToc()">References</a>
+    <a class="mobile-toc-link" href="#structure-appendices" onclick="closeMobileToc()">Appendices</a>
+  </div>
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">Academic Language</span>
+    <a class="mobile-toc-link" href="#lang-quality" onclick="closeMobileToc()">Language Quality</a>
+    <a class="mobile-toc-link" href="#lang-person" onclick="closeMobileToc()">Grammatical Person &amp; Voice</a>
+    <a class="mobile-toc-link" href="#lang-numbers" onclick="closeMobileToc()">Numbers</a>
+    <a class="mobile-toc-link" href="#lang-contractions" onclick="closeMobileToc()">Contractions &amp; Acronyms</a>
+    <a class="mobile-toc-link" href="#lang-emotive" onclick="closeMobileToc()">Emotive Language</a>
+    <a class="mobile-toc-link" href="#lang-sentences" onclick="closeMobileToc()">Sentence Types</a>
+    <a class="mobile-toc-link" href="#lang-lists" onclick="closeMobileToc()">Lists</a>
+  </div>
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">Paragraphs &amp; Cohesion</span>
+    <a class="mobile-toc-link" href="#para-structure" onclick="closeMobileToc()">Paragraph Structure</a>
+    <a class="mobile-toc-link" href="#para-cohesion" onclick="closeMobileToc()">Cohesion</a>
+    <a class="mobile-toc-link" href="#para-signposting" onclick="closeMobileToc()">Signposting</a>
+    <a class="mobile-toc-link" href="#para-punctuation" onclick="closeMobileToc()">Punctuation</a>
+  </div>
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">Verb Tenses</span>
+    <a class="mobile-toc-link" href="#tense-reference" onclick="closeMobileToc()">Quick Reference</a>
+    <a class="mobile-toc-link" href="#tense-by-section" onclick="closeMobileToc()">By Thesis Section</a>
+    <a class="mobile-toc-link" href="#tense-principles" onclick="closeMobileToc()">Key Rules</a>
+  </div>
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">Sources &amp; Citations</span>
+    <a class="mobile-toc-link" href="#cite-sources" onclick="closeMobileToc()">Finding Good Sources</a>
+    <a class="mobile-toc-link" href="#cite-mechanics" onclick="closeMobileToc()">In-Text Rules</a>
+    <a class="mobile-toc-link" href="#cite-weakstrong" onclick="closeMobileToc()">Weak vs. Strong Author</a>
+    <a class="mobile-toc-link" href="#cite-reporting" onclick="closeMobileToc()">Reporting Verbs</a>
+    <a class="mobile-toc-link" href="#cite-quotations" onclick="closeMobileToc()">Direct Quotations</a>
+  </div>
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">Reference List</span>
+    <a class="mobile-toc-link" href="#ref-rules" onclick="closeMobileToc()">Rules &amp; Format</a>
+    <a class="mobile-toc-link" href="#ref-types" onclick="closeMobileToc()">Source Types</a>
+  </div>
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">Visuals</span>
+    <a class="mobile-toc-link" href="#vis-types" onclick="closeMobileToc()">Types &amp; Numbering</a>
+    <a class="mobile-toc-link" href="#vis-practice" onclick="closeMobileToc()">Best Practices</a>
+  </div>
+  <div class="mobile-toc-group">
+    <span class="mobile-toc-label">Common Feedback</span>
+    <a class="mobile-toc-link" href="#fb-referencing" onclick="closeMobileToc()">Referencing Mistakes</a>
+    <a class="mobile-toc-link" href="#fb-concepts" onclick="closeMobileToc()">Concepts &amp; Terms</a>
+    <a class="mobile-toc-link" href="#fb-structure" onclick="closeMobileToc()">Structure &amp; Layout</a>
+    <a class="mobile-toc-link" href="#fb-language" onclick="closeMobileToc()">Language &amp; Style</a>
+    <a class="mobile-toc-link" href="#fb-conventions" onclick="closeMobileToc()">Writing Conventions</a>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <h1>Thesis Writing — Student Guidebook</h1>
+  <div class="hero-badges">
+    <span class="hero-badge">Academic Writing</span>
+    <span class="hero-badge">LAB Guidelines</span>
+  </div>
+  <div class="hero-credit">
+    Designed by <a href="https://www.linkedin.com/in/hagu1/" target="_blank">Hamid Guedra</a> &nbsp;·&nbsp;
+    <a href="https://lab.fi/en" target="_blank">LAB University of Applied Sciences, Language Centre</a> &nbsp;·&nbsp;
+    Generated with Claude 4.6
+  </div>
+</div>
+
+<!-- ── BODY LAYOUT ── -->
+<div class="guidebook-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+
+    <div class="toc-group">
+      <span class="toc-group-label">How to Use</span>
+      <a class="toc-link" href="#about">About This Guide</a>
+      <a class="toc-link" href="#grading">How Your Writing Is Graded</a>
+    </div>
+
+    <div class="toc-group">
+      <span class="toc-group-label">Thesis Structure</span>
+      <a class="toc-link" href="#structure-overview">Sections at a Glance</a>
+      <a class="toc-link" href="#structure-abstract">Abstract</a>
+      <a class="toc-link" href="#structure-intro">Introduction</a>
+      <a class="toc-link" href="#structure-body">Main Body</a>
+      <a class="toc-link" href="#structure-summary">Summary &amp; Discussion</a>
+      <a class="toc-link" href="#structure-refs">References</a>
+      <a class="toc-link" href="#structure-appendices">Appendices</a>
+    </div>
+
+    <div class="toc-group">
+      <span class="toc-group-label">Academic Language</span>
+      <a class="toc-link" href="#lang-quality">Language Quality</a>
+      <a class="toc-link" href="#lang-person">Grammatical Person &amp; Voice</a>
+      <a class="toc-link" href="#lang-numbers">Numbers</a>
+      <a class="toc-link" href="#lang-contractions">Contractions &amp; Acronyms</a>
+      <a class="toc-link" href="#lang-emotive">Emotive Language</a>
+      <a class="toc-link" href="#lang-sentences">Sentence Types</a>
+      <a class="toc-link" href="#lang-lists">Lists</a>
+    </div>
+
+    <div class="toc-group">
+      <span class="toc-group-label">Paragraphs &amp; Cohesion</span>
+      <a class="toc-link" href="#para-structure">Paragraph Structure</a>
+      <a class="toc-link" href="#para-cohesion">Cohesion</a>
+      <a class="toc-link" href="#para-signposting">Signposting</a>
+      <a class="toc-link" href="#para-punctuation">Punctuation</a>
+    </div>
+
+    <div class="toc-group">
+      <span class="toc-group-label">Verb Tenses</span>
+      <a class="toc-link" href="#tense-reference">Quick Reference</a>
+      <a class="toc-link" href="#tense-by-section">By Thesis Section</a>
+      <a class="toc-link" href="#tense-principles">Key Rules</a>
+    </div>
+
+    <div class="toc-group">
+      <span class="toc-group-label">Sources &amp; Citations</span>
+      <a class="toc-link" href="#cite-sources">Finding Good Sources</a>
+      <a class="toc-link" href="#cite-mechanics">In-Text Rules</a>
+      <a class="toc-link" href="#cite-weakstrong">Weak vs. Strong Author</a>
+      <a class="toc-link" href="#cite-reporting">Reporting Verbs</a>
+      <a class="toc-link" href="#cite-quotations">Direct Quotations</a>
+    </div>
+
+    <div class="toc-group">
+      <span class="toc-group-label">Reference List</span>
+      <a class="toc-link" href="#ref-rules">Rules &amp; Format</a>
+      <a class="toc-link" href="#ref-types">Source Types</a>
+    </div>
+
+    <div class="toc-group">
+      <span class="toc-group-label">Visuals</span>
+      <a class="toc-link" href="#vis-types">Types &amp; Numbering</a>
+      <a class="toc-link" href="#vis-practice">Best Practices</a>
+    </div>
+
+    <div class="toc-group">
+      <span class="toc-group-label">Common Feedback</span>
+      <a class="toc-link" href="#fb-referencing">Referencing Mistakes</a>
+      <a class="toc-link" href="#fb-concepts">Concepts &amp; Terms</a>
+      <a class="toc-link" href="#fb-structure">Structure &amp; Layout</a>
+      <a class="toc-link" href="#fb-language">Language &amp; Style</a>
+      <a class="toc-link" href="#fb-conventions">Writing Conventions</a>
+    </div>
+
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="main-content">
+
+
+    <!-- ══════ 1. HOW TO USE ══════ -->
+    <section class="content-section" id="about">
+      <h2 class="section-heading"><span class="section-tag">1</span>How to Use This Guide</h2>
+
+      <p class="section-intro">This guide covers everything you need to write your bachelor's thesis at LAB. Use the menu on the left to jump to any topic. The last section — <strong>Common Feedback</strong> — lists the most frequent mistakes found in student theses, with clear before-and-after examples.</p>
+
+      <p>This guide is based on the <strong>LAB University of Applied Sciences Thesis Guidebook (August 2025 edition)</strong>. All rules follow that guidebook. If you are unsure about something, always check the original guidebook on <a href="https://elab.lab.fi/en/completing-studies/theses/thesis-bachelors-degree" target="_blank">eLAB</a>.</p>
+
+      <div class="callout tip">
+        <span class="ico">💡</span>
+        <div>Always write your thesis in the <strong>LAB thesis template</strong> in Microsoft Word. The template already has the correct styles, margins, and font settings. Do not change these.</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="grading">
+      <div class="subsection-heading">How Your Writing Is Graded</div>
+      <p>Your language instructor will grade your writing on five areas.</p>
+      <table class="data-table">
+        <thead><tr><th>Area</th><th>What it means</th><th>How to meet it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1. Structure</strong></td><td>Your chapters, sections, and paragraphs are organised clearly and logically.</td><td>Use the LAB template. Follow the required section order.</td></tr>
+          <tr><td><strong>2. Fluency &amp; Style</strong></td><td>Your writing is clear, professional, and easy to read.</td><td>Avoid informal words. Write and proofread carefully.</td></tr>
+          <tr><td><strong>3. Grammatical Accuracy</strong></td><td>Your grammar is correct. You use the right tenses. Your spelling is consistent.</td><td>Use Word's Editor (set to English UK or US — be consistent throughout).</td></tr>
+          <tr><td><strong>4. Referencing</strong></td><td>You follow LAB referencing rules in your citations and reference list.</td><td>Follow Thesis Guidebook chapters 7.3 and 7.4. Every source cited must appear in the list.</td></tr>
+          <tr><td><strong>5. Visuals</strong></td><td>All tables, figures, and images are numbered, labelled, and discussed.</td><td>Refer to every visual in the text before it appears. Always analyse what it shows.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+
+    <!-- ══════ 2. THESIS STRUCTURE ══════ -->
+    <section class="content-section" id="structure-overview">
+      <h2 class="section-heading"><span class="section-tag">2</span>Thesis Structure</h2>
+      <p class="section-intro">Every LAB bachelor's thesis has the same structure. The parts must appear in the correct order. The LAB thesis template handles the formatting — always write inside the template.</p>
+
+      <div class="struct-list">
+        <div class="struct-item"><div class="num">—</div><div class="body"><div class="name">Statement about the Use of AI</div><div class="note">Required. Explains whether you used AI tools and how.</div></div></div>
+        <div class="struct-item"><div class="num">—</div><div class="body"><div class="name">Abstract</div><div class="note">A short summary: your topic, methods, key findings, and 3–7 keywords.</div></div></div>
+        <div class="struct-item"><div class="num">—</div><div class="body"><div class="name">Table of Contents</div><div class="note">Created automatically from the LAB Heading styles. Never typed by hand.</div></div></div>
+        <div class="struct-item"><div class="num">—</div><div class="body"><div class="name">List of Abbreviations / Terms</div><div class="note">Only needed if your thesis has many field-specific terms or abbreviations.</div></div></div>
+        <div class="struct-item"><div class="num">1</div><div class="body"><div class="name">Introduction</div><div class="note">Background, objectives, research questions, and delimitations.</div></div></div>
+        <div class="struct-item"><div class="num">2–5</div><div class="body"><div class="name">Main Body Chapters</div><div class="note">Theoretical framework, case company or context, empirical/research chapters, analysis.</div></div></div>
+        <div class="struct-item"><div class="num">6–7</div><div class="body"><div class="name">Summary and Discussion</div><div class="note">Revisits your objectives, summarises findings, and suggests future research.</div></div></div>
+        <div class="struct-item"><div class="num">—</div><div class="body"><div class="name">References</div><div class="note">All sources you cited, in alphabetical order.</div></div></div>
+        <div class="struct-item"><div class="num">—</div><div class="body"><div class="name">Appendices</div><div class="note">Questionnaires, large tables, and other extra material. Only if needed.</div></div></div>
+      </div>
+
+      <div class="callout warn">
+        <span class="ico">⚠️</span>
+        <div>Each chapter must have at least <strong>two paragraphs</strong>. Each paragraph must have at least <strong>two sentences</strong>. A chapter cannot be only lists or visuals.</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="structure-abstract">
+      <div class="subsection-heading">Abstract</div>
+      <p>The abstract is a short, independent summary of your thesis. It answers three questions:</p>
+      <ul>
+        <li>What did you study and why?</li>
+        <li>How did you do it (what methods did you use)?</li>
+        <li>What are the key findings and conclusions?</li>
+      </ul>
+      <table class="data-table" style="margin-top:12px;">
+        <thead><tr><th>Rule</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Use <strong>past tense</strong> for background</td><td><em>The thesis studied the following…</em></td></tr>
+          <tr><td>Use <strong>present tense</strong> for conclusions</td><td><em>The findings show that…</em></td></tr>
+          <tr><td>Use <strong>impersonal language</strong> — write about the thesis, not "I" or "we"</td><td><em>The thesis investigates…</em> (not: "We investigated…")</td></tr>
+          <tr><td>Do not refer back to the thesis with "this" — the abstract is a separate text</td><td><em>The thesis investigates…</em> (not: "In this thesis…")</td></tr>
+          <tr><td>List <strong>3–7 keywords</strong> at the end</td><td><em>Keywords: supply chain, resilience, Finland</em></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content-section" id="structure-intro">
+      <div class="subsection-heading">Introduction</div>
+      <p>The introduction sets up your whole thesis. It should include:</p>
+      <ul>
+        <li><strong>Background</strong> — what is the topic and why does it matter?</li>
+        <li><strong>Objectives and delimitations</strong> — what does your thesis aim to do? What does it not cover?</li>
+        <li><strong>Research questions</strong> — one main question, plus supporting sub-questions</li>
+        <li><strong>Method overview</strong> — a brief description of how you collected and analysed data</li>
+        <li><strong>Chapter roadmap</strong> (optional) — tells the reader how the report is structured</li>
+      </ul>
+
+      <div class="eyebrow">Open vs. Closed Research Questions</div>
+      <div class="compare-grid">
+        <div class="compare-box bad"><span class="lbl">❌ Closed — avoid</span>Does Company X's marketing plan increase sales?</div>
+        <div class="compare-box good"><span class="lbl">✅ Open — better</span>How could Company X's marketing plan be developed to increase sales among Gen Z?</div>
+      </div>
+
+      <div class="eyebrow">Method vs. Methodology</div>
+      <div class="compare-grid">
+        <div class="compare-box bad"><span class="lbl">❌ Vague</span>The research was conducted using qualitative method.</div>
+        <div class="compare-box good"><span class="lbl">✅ Specific</span>The research is qualitative. Data was collected through semi-structured interviews.</div>
+      </div>
+      <div class="callout tip">
+        <span class="ico">💡</span>
+        <div><strong>Method</strong> = the tool you used to collect data (e.g., semi-structured interview). <strong>Methodology</strong> = the research philosophy behind your approach. In most cases, use the word <em>method</em>.</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="structure-body">
+      <div class="subsection-heading">Main Body Chapters</div>
+
+      <div class="rule-card">
+        <div class="rule-card-title">Heading rules</div>
+        <ul>
+          <li>If a chapter has a first sub-section (e.g., 3.1), do not write any text between the chapter heading (3) and the first sub-section. The main chapter heading is left empty.</li>
+          <li>A sub-section at level 2 (e.g., 3.1) must have at least one full paragraph before any level 3 sub-heading (e.g., 3.1.1).</li>
+          <li>You must always have <strong>at least two sub-sections at the same level</strong>. If you have 3.1, you need 3.2.</li>
+          <li>Heading numbers do not end with a full stop. Write <strong>3.1</strong>, not 3.1.</li>
+          <li>Do not use question marks or exclamation marks in headings.</li>
+          <li>Be consistent: use either title case or sentence case throughout — do not mix both.</li>
+        </ul>
+      </div>
+
+      <div class="callout info">
+        <span class="ico">ℹ️</span>
+        <div>Use <strong>Theoretical Framework</strong>, not <em>Knowledge Base</em>. "Knowledge base" is not standard in English academic writing.</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="structure-summary">
+      <div class="subsection-heading">Summary &amp; Discussion</div>
+      <p>This chapter (usually chapter 6 or 7, often titled <strong>Summary</strong>) must connect back to your introduction. What you said your objectives were must be directly addressed here.</p>
+      <table class="data-table">
+        <thead><tr><th>Thesis type</th><th>What this chapter must include</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Research thesis</strong></td><td>Research objectives and results; reliability and usability of results; suggestions for future research</td></tr>
+          <tr><td><strong>Functional / practice-based thesis</strong></td><td>Objective of the thesis; evaluation of the development process and output; suggestions for further development</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content-section" id="structure-refs">
+      <div class="subsection-heading">References</div>
+      <p>The reference list comes after the main body text. The heading is <strong>References</strong> (style: LAB Non-numbered). The list is in alphabetical order by the first author's surname.</p>
+      <p>See the <a href="#ref-rules">Reference List</a> section of this guide for all formatting rules.</p>
+    </section>
+
+    <section class="content-section" id="structure-appendices">
+      <div class="subsection-heading">Appendices</div>
+      <p>Use appendices for material that supports your thesis but is too large or detailed for the main text — for example, questionnaires, interview guides, or technical drawings.</p>
+      <ul>
+        <li>Each appendix has its own page numbering (not continued from the main text)</li>
+        <li>Appendices are listed below the table of contents — not inside it</li>
+        <li>If an appendix is confidential, it is not included in the published version</li>
+      </ul>
+    </section>
+
+
+    <!-- ══════ 3. ACADEMIC LANGUAGE ══════ -->
+    <section class="content-section" id="lang-quality">
+      <h2 class="section-heading"><span class="section-tag">3</span>Academic Language</h2>
+      <p class="section-intro">These are the key language rules for your thesis. Good academic writing is clear, direct, and easy to read. Each section below covers a specific rule with examples.</p>
+
+      <div class="subsection-heading">Language Quality</div>
+      <p>Ask yourself these questions when you proofread:</p>
+      <ul>
+        <li>Is every sentence necessary?</li>
+        <li>Can I make this sentence shorter without losing meaning?</li>
+        <li>Am I using professional vocabulary for my field?</li>
+        <li>Am I using direct, active constructions?</li>
+      </ul>
+      <div class="compare-grid">
+        <div class="compare-box bad"><span class="lbl">❌ Avoid</span>An evaluation of the results was carried out by the research team within the framework of the project.</div>
+        <div class="compare-box good"><span class="lbl">✅ Prefer</span>The research team evaluated the results.</div>
+      </div>
+      <div class="rule-card" style="margin-top:10px;">
+        <div class="rule-card-title">Common problems to avoid</div>
+        <ul>
+          <li>Informal words: <em>a lot of, kind of, big, good, great</em></li>
+          <li>Vague filler phrases: <em>within the framework of, in terms of, in the context of</em></li>
+          <li>Long noun phrases: <em>the evaluation of the results was carried out</em> → just <em>evaluated</em></li>
+          <li>Sentences that are too long — aim for a maximum of about 30–40 words per sentence</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="content-section" id="lang-person">
+      <div class="subsection-heading">Grammatical Person &amp; Voice</div>
+      <p>Use the <strong>third person</strong> in most of your thesis. This keeps the focus on the research, not the researcher.</p>
+
+      <div class="eyebrow">Good subject choices for your sentences</div>
+      <div class="example-item"><span class="hl">This thesis</span> focuses on the impact of digital marketing on consumer behaviour.</div>
+      <div class="example-item"><span class="hl">Chapter 3</span> introduces the theoretical framework.</div>
+      <div class="example-item"><span class="hl">The respondents</span> indicated a strong preference for digital channels.</div>
+      <div class="example-item"><span class="hl">The findings</span> show that customer loyalty depends on more than price.</div>
+
+      <div class="callout warn">
+        <span class="ico">⚠️</span>
+        <div>Do not write <strong>"The author of this thesis collected data…"</strong> or <strong>"The researcher conducted interviews…"</strong> These sound awkward and create false distance. Use passive voice or "I" instead.</div>
+      </div>
+
+      <div class="callout warn">
+        <span class="ico">⚠️</span>
+        <div>Never use <strong>you / your</strong> to address the reader. This is not formal academic style. Many commercial websites use this — do not copy from them.</div>
+      </div>
+
+      <div class="eyebrow">Passive vs. Active Voice</div>
+      <table class="data-table">
+        <thead><tr><th>Voice</th><th>When to use it</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Passive</strong></td><td>When the action matters more than who did it; to maintain a formal tone</td><td><em>Data were collected through semi-structured interviews.</em></td></tr>
+          <tr><td><strong>Active</strong></td><td>For clearer, shorter sentences; often preferred in qualitative research</td><td><em>I collected data through semi-structured interviews.</em></td></tr>
+        </tbody>
+      </table>
+      <div class="callout tip">
+        <span class="ico">💡</span>
+        <div>Using <strong>"I"</strong> is acceptable in many academic contexts. It avoids the awkwardness of constant passive sentences. Discuss this with your supervisor — conventions vary by field.</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="lang-numbers">
+      <div class="subsection-heading">Numbers</div>
+      <table class="data-table">
+        <thead><tr><th>Rule</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Spell out numbers zero to nine</td><td><em>We interviewed <strong>five</strong> respondents.</em></td></tr>
+          <tr><td>Use numerals for 10 and above</td><td><em><strong>23</strong> participants completed the survey.</em></td></tr>
+          <tr><td>Never start a sentence with a numeral — spell it out or rewrite the sentence</td><td><em><strong>Twenty-two</strong> out of 35 respondents said…</em></td></tr>
+          <tr><td>Always use numerals with the % symbol. No space between the number and %.</td><td><em>Approximately <strong>60%</strong> of respondents…</em></td></tr>
+          <tr><td>Use numerals for precise units of measure</td><td><em><strong>5 kg</strong>, <strong>2 cm</strong>, <strong>6 litres</strong></em></td></tr>
+          <tr><td>Chapter and figure references always use numerals</td><td><em><strong>Chapter 2</strong> introduces… (not "Chapter two")</em></td></tr>
+        </tbody>
+      </table>
+      <div class="eyebrow">Percent, Percentage, Percentage Point</div>
+      <div class="rule-card">
+        <ul>
+          <li><strong>Percent</strong> — a specific number out of 100: <em>60%</em></li>
+          <li><strong>Percentage</strong> — the concept, or a general amount: <em>The percentage of respondents increased.</em></li>
+          <li><strong>Percentage point</strong> — the difference between two percentages: <em>If a rate goes from 10% to 15%, it increased by 5 percentage points</em> (not "5 percent").</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="content-section" id="lang-contractions">
+      <div class="subsection-heading">Contractions &amp; Acronyms</div>
+      <div class="rule-card">
+        <div class="rule-card-title">No contractions in academic writing</div>
+        <table class="data-table" style="margin:6px 0 0;">
+          <thead><tr><th>Contraction</th><th>Write this instead</th></tr></thead>
+          <tbody>
+            <tr><td><code>don't</code></td><td>do not</td></tr>
+            <tr><td><code>it's</code></td><td>it is</td></tr>
+            <tr><td><code>can't</code></td><td>cannot (one word)</td></tr>
+            <tr><td><code>won't</code></td><td>will not</td></tr>
+            <tr><td><code>haven't</code></td><td>have not</td></tr>
+            <tr><td><code>we're</code></td><td>we are</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rule-card" style="margin-top:10px;">
+        <div class="rule-card-title">Acronym rules</div>
+        <ul>
+          <li><strong>Introduce first:</strong> write the full term with the acronym in brackets — <em>The World Health Organization (WHO) reported…</em> — then use WHO throughout.</li>
+          <li><strong>Avoid short forms</strong> in the main text: write <em>et cetera</em>, <em>information</em>, <em>statistics</em> — not etc., info, stats.</li>
+          <li><strong>Latin abbreviations</strong> (i.e., e.g., et al.) are accepted mainly inside brackets: <em>(e.g., age, gender, and income)</em></li>
+          <li><strong>Standard units</strong> (kg, cm, min) are always abbreviated when used with a numeral.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="content-section" id="lang-emotive">
+      <div class="subsection-heading">Avoiding Emotive Language</div>
+      <p>Academic writing reports facts and analyses evidence. Emotional or opinion words reduce your credibility. Replace them with precise, factual language.</p>
+      <table class="data-table">
+        <thead><tr><th>Avoid</th><th>Use instead</th></tr></thead>
+        <tbody>
+          <tr><td>The results were <em>great</em></td><td>The results were <strong>significant</strong></td></tr>
+          <tr><td>A <em>huge</em> increase…</td><td>A <strong>25% increase</strong>… (be specific)</td></tr>
+          <tr><td>The <em>famous</em> study by X…</td><td>The study by X… (fame is not relevant)</td></tr>
+          <tr><td>I <em>believe / feel / think</em> that…</td><td><strong>The data suggest</strong> that… / <strong>The findings show</strong> that…</td></tr>
+          <tr><td>This is <em>bad</em> because…</td><td>This is <strong>problematic</strong> because…</td></tr>
+        </tbody>
+      </table>
+      <div class="callout tip">
+        <span class="ico">💡</span>
+        <div>When you need to evaluate a source, use academic words: <strong>robust</strong>, <strong>limited</strong>, <strong>comprehensive</strong>, <strong>reliable</strong>, <strong>promising</strong>.</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="lang-sentences">
+      <div class="subsection-heading">Sentence Types</div>
+      <table class="data-table">
+        <thead><tr><th>Type</th><th>Use in thesis?</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Declarative</strong> (statements)</td><td>Yes — this is the main type</td><td><em>Five respondents were interviewed.</em></td></tr>
+          <tr><td><strong>Questions</strong></td><td>Mostly avoid</td><td>Avoid rhetorical questions. Use a direct statement instead.</td></tr>
+          <tr><td><strong>Imperative</strong> (commands/instructions)</td><td>Limited use</td><td>Acceptable in questionnaire instructions or parenthetical signposting: <em>(see Figure 1)</em></td></tr>
+          <tr><td><strong>Exclamatory</strong></td><td>Never</td><td>No exclamation marks in academic writing</td></tr>
+        </tbody>
+      </table>
+
+      <div class="eyebrow">Sentence Structure Types</div>
+      <table class="data-table">
+        <thead><tr><th>Type</th><th>Pattern</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Simple</strong></td><td>One independent clause</td><td><em>Five respondents were interviewed.</em></td></tr>
+          <tr><td><strong>Compound</strong></td><td>Two independent clauses joined by <code>;</code> or FANBOYS (for, and, nor, but, or, yet, so)</td><td><em>They interviewed five respondents, and they recorded the discussion.</em></td></tr>
+          <tr><td><strong>Complex</strong></td><td>One independent + one dependent clause (because, while, if, when, although…)</td><td><em>Because the data were insufficient, the study recommends further research.</em></td></tr>
+          <tr><td><strong>Compound-complex</strong></td><td>Two independent clauses + one dependent clause</td><td><em>They interviewed the respondents as a group because they wanted to examine collaboration, and they recorded the interactions for analysis.</em></td></tr>
+        </tbody>
+      </table>
+      <div class="callout tip">
+        <span class="ico">💡</span>
+        <div>When a dependent clause starts the sentence, use a comma: <em>"Because the data were insufficient<strong>,</strong> the study recommends further investigation."</em></div>
+      </div>
+    </section>
+
+    <section class="content-section" id="lang-lists">
+      <div class="subsection-heading">Lists</div>
+      <p>Use lists where they genuinely help clarity. But a thesis must be built on paragraphs — lists cannot replace them.</p>
+      <div class="rule-card">
+        <div class="rule-card-title">List rules</div>
+        <ul>
+          <li>Every list needs an <strong>introductory sentence or phrase</strong> before the bullets</li>
+          <li><strong>No commas</strong> after bullets</li>
+          <li>All bullet items must be <strong>grammatically parallel</strong> — all noun phrases, or all verb phrases, etc.</li>
+          <li>If bullets are <strong>not full sentences</strong>: start lowercase, full stop after the <strong>last bullet only</strong></li>
+          <li>If bullets are <strong>full sentences</strong>: capital letter and full stop on <strong>each bullet</strong></li>
+        </ul>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-box bad"><span class="lbl">❌ Commas after bullets</span>The system has several features:<br>• Fast processing,<br>• Secure login,<br>• Easy export.</div>
+        <div class="compare-box good"><span class="lbl">✅ Correct</span>The system has several features:<br>• fast processing<br>• secure login<br>• easy export.</div>
+      </div>
+    </section>
+
+
+    <!-- ══════ 4. PARAGRAPHS & COHESION ══════ -->
+    <section class="content-section" id="para-structure">
+      <h2 class="section-heading"><span class="section-tag">4</span>Paragraphs &amp; Cohesion</h2>
+      <p class="section-intro">Every paragraph needs a clear structure. Your writing also needs to flow smoothly from one idea to the next. This section explains how.</p>
+
+      <div class="subsection-heading">Paragraph Structure</div>
+      <p>Every paragraph in your thesis should follow a three-part structure:</p>
+      <table class="data-table">
+        <thead><tr><th>Part</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Topic sentence</strong></td><td>States the main idea of the paragraph. Put the most important information first.</td></tr>
+          <tr><td><strong>Supporting sentences</strong></td><td>Explain the main idea. Provide evidence, examples, and citations. Explain why the evidence matters.</td></tr>
+          <tr><td><strong>Concluding sentence</strong></td><td>Links back to the main idea and/or forward to the next paragraph.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="eyebrow">Example paragraph — with annotations</div>
+      <div class="rule-card" style="font-size:13.5px; line-height:1.7;">
+        <p><span style="background:#dbeafe;padding:1px 4px;border-radius:3px;font-size:11px;font-weight:700;margin-right:4px;">TOPIC</span><strong>Differentiation serves as a driver for Marimekko, which allows the company to adjust pricing based on consumer psychology.</strong></p>
+        <p style="margin-top:8px;"><span style="background:#dcfce7;padding:1px 4px;border-radius:3px;font-size:11px;font-weight:700;margin-right:4px;">SUPPORT</span>Huefner and Sanders (2012, 27) define differentiation as a tactic where prices are set according to a customer's perceived ability to pay. To achieve this, Marimekko uses multi-channel surveys to gather consumer insights, which then inform specific product and pricing adjustments (Jones 2023a, 19–21). These insights are vital because they ensure that the company's premium positioning remains aligned with actual market demand.</p>
+        <p style="margin-top:8px;"><span style="background:#fef9c3;padding:1px 4px;border-radius:3px;font-size:11px;font-weight:700;margin-right:4px;">CLOSE</span>By bridging the gap between consumer expectations and price, Marimekko's differentiation strategy serves as a foundational component of its wider corporate goals.</p>
+        <p style="margin-top:8px; font-size:12.5px; color:var(--gray-500);"><em>The next paragraph starts: "Beyond pricing tactics, Marimekko's <strong>wider goals</strong>…" — it picks up the phrase "wider goals" from the closing sentence. This is how paragraphs link together.</em></p>
+      </div>
+    </section>
+
+    <section class="content-section" id="para-cohesion">
+      <div class="subsection-heading">Cohesion</div>
+      <p>Cohesion is what makes your writing feel connected. Use these four techniques:</p>
+      <div class="rule-card">
+        <div class="rule-card-title">1. Transition words (signposting)</div>
+        <p>Words like <em>however</em>, <em>consequently</em>, and <em>furthermore</em> show the logical connection between ideas. See the <a href="#para-signposting">Signposting</a> section for a full list.</p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-card-title">2. Repeat key terms — do not use synonyms</div>
+        <p>Use the same word for the same concept throughout. If you switch to a synonym, the reader may think you mean something different.</p>
+        <div class="compare-grid" style="margin-top:8px;">
+          <div class="compare-box bad"><span class="lbl">❌ Confusing</span>differentiation → strategy → approach → mechanism</div>
+          <div class="compare-box good"><span class="lbl">✅ Clear</span>differentiation → differentiation strategy → Marimekko's differentiation</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-card-title">3. Use "this" and "these" carefully</div>
+        <p>These pronouns are good for linking sentences — but make sure the reader knows what they refer to. If there is any doubt, add the noun: <em>this strategy</em>, <em>these findings</em>.</p>
+        <div class="compare-grid" style="margin-top:8px;">
+          <div class="compare-box bad"><span class="lbl">❌ Unclear</span>The researcher evaluated the survey, the interviews, and the case study. <strong>This</strong> was used as the basis for the methodology chapter.</div>
+          <div class="compare-box good"><span class="lbl">✅ Clear</span>The researcher evaluated the survey, the interviews, and the case study. <strong>This triangulated data</strong> was used as the basis for the methodology chapter.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-card-title">4. Known-New: linking sentences with passive voice</div>
+        <p>In English, <strong>new information comes at the end</strong> of a sentence and <strong>known (given) information comes at the start</strong>. The passive voice lets you move known information to the front of the next sentence.</p>
+        <div class="example-item" style="margin-top:8px; line-height:1.8;">
+          Inbound marketing builds <span class="hl">brand awareness</span>.&nbsp;&nbsp;&nbsp;&nbsp;← "brand awareness" is new<br>
+          <span class="hl">Brand awareness</span> can be defined as customers' ability to recognise a brand. &nbsp;← moved to front
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="para-signposting">
+      <div class="subsection-heading">Signposting</div>
+      <p>Signposting words guide the reader through your argument. Follow the punctuation rule for all of them.</p>
+      <div class="callout warn">
+        <span class="ico">⚠️</span>
+        <div>
+          <strong>Punctuation rule:</strong><br>
+          <strong>Two sentences:</strong> The theory is popular. <code>However,</code> the data is limited.<br>
+          <strong>One sentence:</strong> The theory is popular<code>; however,</code> the data is limited.<br><br>
+          Use a <strong>comma after</strong> the signposting word at the start of a new sentence. Use a <strong>semicolon before + comma after</strong> when joining two clauses into one sentence.
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="signpost-card">
+          <div class="signpost-header"><span>➕</span><span class="signpost-title">Adding information</span></div>
+          <div class="signpost-words"><span class="sp-word">Furthermore,</span><span class="sp-word">In addition,</span><span class="sp-word">Moreover,</span><span class="sp-word">Additionally,</span><span class="sp-word">Similarly,</span></div>
+          <div class="signpost-eg"><em>"Furthermore, recent studies suggest that customer loyalty is driven by brand values."</em></div>
+          <div class="signpost-eg"><em>"The strategy reduced costs; moreover, it improved employee satisfaction."</em></div>
+        </div>
+        <div class="signpost-card">
+          <div class="signpost-header"><span>⇄</span><span class="signpost-title">Comparing &amp; contrasting</span></div>
+          <div class="signpost-words"><span class="sp-word">However,</span><span class="sp-word">Conversely,</span><span class="sp-word">Nevertheless,</span><span class="sp-word">In contrast,</span><span class="sp-word">On the contrary,</span></div>
+          <div class="signpost-eg"><em>"The results supported the hypothesis; however, the second trial yielded conflicting data."</em></div>
+          <div class="signpost-eg"><em>"Large corporations benefit from economies of scale. In contrast, small companies rely on flexibility."</em></div>
+        </div>
+        <div class="signpost-card">
+          <div class="signpost-header"><span>➜</span><span class="signpost-title">Cause &amp; effect</span></div>
+          <div class="signpost-words"><span class="sp-word">Consequently,</span><span class="sp-word">Therefore,</span><span class="sp-word">As a result,</span><span class="sp-word">Hence,</span><span class="sp-word">Accordingly,</span></div>
+          <div class="signpost-eg"><em>"The company failed to adapt to digital trends; consequently, market share declined."</em></div>
+        </div>
+        <div class="signpost-card">
+          <div class="signpost-header"><span>🔎</span><span class="signpost-title">Giving examples</span></div>
+          <div class="signpost-words"><span class="sp-word">For instance,</span><span class="sp-word">For example,</span><span class="sp-word">Specifically,</span><span class="sp-word">To illustrate,</span><span class="sp-word">In particular,</span></div>
+          <div class="signpost-eg"><em>"Several companies have adopted circular economy principles. For example, IKEA now offers a buy-back scheme."</em></div>
+        </div>
+        <div class="signpost-card">
+          <div class="signpost-header"><span>🏁</span><span class="signpost-title">Concluding</span></div>
+          <div class="signpost-words"><span class="sp-word">In conclusion,</span><span class="sp-word">To summarise,</span><span class="sp-word">In short,</span><span class="sp-word">Overall,</span></div>
+          <div class="signpost-eg"><em>"Overall, the study demonstrates that early stakeholder engagement significantly reduces project risk."</em></div>
+        </div>
+      </div>
+      <div class="callout tip">
+        <span class="ico">💡</span>
+        <div>Use at most one signposting word per paragraph. Using too many makes your writing feel forced and can actually make your argument harder to follow.</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="para-punctuation">
+      <div class="subsection-heading">Punctuation</div>
+      <p><strong>General rule: no space before a punctuation mark, but a space after.</strong></p>
+
+      <div class="eyebrow">Comma</div>
+      <div class="rule-card"><ul>
+        <li><strong>In a list:</strong> <em>The respondents were asked about their breakfast, lunch, and dinner.</em></li>
+        <li><strong>After an introductory element:</strong> <em>First, the respondents answered questions about their eating habits.</em></li>
+        <li><strong>After a dependent clause that starts the sentence:</strong> <em>Because the results were inconclusive, some respondents were asked to return.</em></li>
+        <li><strong>Before a final phrase:</strong> <em>Few respondents explained their dietary habits in detail, specifically regarding protein intake.</em></li>
+      </ul></div>
+
+      <div class="eyebrow">Semicolon</div>
+      <div class="rule-card"><ul>
+        <li><strong>To link two closely related sentences</strong> (where a full stop would feel too final): <em>The respondents reflected on their habits; this helped get an overview of how they view food.</em></li>
+        <li><strong>To link contrasting ideas:</strong> <em>The diet was not about weight loss; it was about heart health.</em></li>
+        <li><strong>To separate complex list items</strong> that already contain commas: <em>…leafy, green vegetables; lean, organic proteins; and fresh, seasonal fruits.</em></li>
+      </ul></div>
+
+      <div class="eyebrow">Colon</div>
+      <div class="rule-card"><ul>
+        <li><strong>Before a list:</strong> <em>The respondents came from three cities: Helsinki, Espoo, and Lahti.</em></li>
+        <li><strong>To point to an explanation or conclusion:</strong> <em>The policy has one clear aim: to reduce waste by 40%.</em></li>
+      </ul></div>
+
+      <div class="eyebrow">Apostrophe</div>
+      <div class="rule-card"><ul>
+        <li><strong>Possession (singular):</strong> <em>the company's strategy</em></li>
+        <li><strong>Possession (plural):</strong> <em>the companies' strategies</em></li>
+        <li><code>its</code> = possessive (no apostrophe): <em>The company changed its strategy.</em></li>
+        <li><code>it's</code> = it is (with apostrophe) — but do not use contractions in academic writing</li>
+        <li>Dates: <em>in the 1990s</em> (no apostrophe — this is just a plural)</li>
+      </ul></div>
+    </section>
+
+
+    <!-- ══════ 5. VERB TENSES ══════ -->
+    <section class="content-section" id="tense-reference">
+      <h2 class="section-heading"><span class="section-tag">5</span>Verb Tenses</h2>
+      <p class="section-intro">Different parts of your thesis use different tenses. Use this section as a quick reference while writing. The tense you choose signals <em>why</em> you are writing — to report a fact, describe a past study, or interpret a finding.</p>
+
+      <div class="subsection-heading">Quick Reference</div>
+      <div>
+        <div class="quick-ref-row"><div class="quick-ref-section">1 · Introduction</div><div class="quick-ref-tenses"><span class="tense-badge pres">Present</span> topic &amp; aims &nbsp;<span class="tense-badge fut">Future / Present</span> chapter roadmap</div></div>
+        <div class="quick-ref-row"><div class="quick-ref-section">2 · Theoretical Background</div><div class="quick-ref-tenses"><span class="tense-badge past">Past</span> specific studies &nbsp;<span class="tense-badge pres">Present</span> author arguments &nbsp;<span class="tense-badge perf">Present Perfect</span> research trends</div></div>
+        <div class="quick-ref-row"><div class="quick-ref-section">3 · Empirical Part</div><div class="quick-ref-tenses"><span class="tense-badge past">Past</span> dominant — all methods and results</div></div>
+        <div class="quick-ref-row"><div class="quick-ref-section">4 · Discussion</div><div class="quick-ref-tenses"><span class="tense-badge past">Past</span> referring to findings &nbsp;<span class="tense-badge pres">Present</span> interpreting meaning</div></div>
+        <div class="quick-ref-row"><div class="quick-ref-section">5 · Conclusion</div><div class="quick-ref-tenses"><span class="tense-badge pres">Present</span> main points &nbsp;<span class="tense-badge fut">Future / Modal</span> recommendations</div></div>
+      </div>
+
+      <div class="tool-links">
+        <a class="tool-link" href="https://hamgued.github.io/html-tools/thesis-tense-guide.html" target="_blank">🕐 Interactive Tense Guide →</a>
+      </div>
+    </section>
+
+    <section class="content-section" id="tense-by-section">
+      <div class="subsection-heading">By Thesis Section</div>
+
+      <div class="eyebrow">Introduction — Present tense</div>
+      <p>Your topic, aims, and context are still true when the reader reads the text. Use present tense.</p>
+      <div class="example-item">This thesis <span class="hl">examines</span> digital literacy among first-year university students.</div>
+      <div class="example-item">The study <span class="hl">aims</span> to identify key barriers to academic writing.</div>
+      <p style="margin-top:8px;">For the chapter roadmap, both future and present tense are correct — just be consistent:</p>
+      <div class="compare-grid">
+        <div class="compare-box good"><span class="lbl">Future — correct</span>Chapter 2 <strong>will present</strong> the theoretical framework.</div>
+        <div class="compare-box good"><span class="lbl">Present — also correct</span>Chapter 2 <strong>presents</strong> the theoretical framework.</div>
+      </div>
+      <div class="callout warn" style="margin-top:10px;">
+        <span class="ico">⚠️</span>
+        <div>Do not write <em>"This thesis <strong>aimed</strong> to…"</em> in the introduction. Save past tense for the conclusion, where you look back at what you did.</div>
+      </div>
+
+      <div class="eyebrow">Theoretical Background — Three tenses</div>
+      <p>This section uses three different tenses. You can use all three in the same paragraph — this is normal.</p>
+      <table class="data-table">
+        <thead><tr><th>Tense</th><th>When to use it</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tense-badge past">Past</span></td><td>Describing a specific completed study — usually when the year appears with the author's name</td><td><em>Smith (2018) <strong>found</strong> that motivation declined in online courses.</em></td></tr>
+          <tr><td><span class="tense-badge pres">Present</span></td><td>The author's claim or argument — still relevant today</td><td><em>Smith (2018) <strong>argues</strong> that autonomy plays a central role in learning.</em></td></tr>
+          <tr><td><span class="tense-badge perf">Present Perfect</span></td><td>A research trend that started in the past and is still ongoing</td><td><em>Researchers <strong>have increasingly focused</strong> on the role of peer feedback (Smith 2018; Johnson 2020).</em></td></tr>
+        </tbody>
+      </table>
+      <div class="callout info" style="margin-top:10px;">
+        <span class="ico">ℹ️</span>
+        <div>It is correct to mix all three tenses in one paragraph: <em>"Smith (2018) <strong>found</strong> [past] that motivation declined — and this <strong>remains</strong> [present] a key issue today, as more recent studies <strong>have confirmed</strong> [present perfect]."</em></div>
+      </div>
+
+      <div class="eyebrow">Empirical Part — Past tense</div>
+      <p>Everything in this section is finished. Use past tense for both your methods and your results.</p>
+      <div class="example-item">Data <span class="hl">were collected</span> through semi-structured interviews with 12 participants.</div>
+      <div class="example-item">The analysis <span class="hl">revealed</span> three recurring themes across the data.</div>
+      <div class="callout tip"><span class="ico">💡</span><div>The one exception: use present tense when you refer to a table or figure — <em>"Table 1 <strong>shows</strong> the results."</em></div></div>
+
+      <div class="eyebrow">Discussion — Two tenses</div>
+      <div class="compare-grid">
+        <div class="compare-box" style="background:var(--yellow-light);border:1px solid #fcd34d;color:#78350f;"><span class="lbl" style="opacity:.8;">Past — referring to findings</span>The results <strong>indicated</strong> a preference for written feedback.<br>Participants <strong>reported</strong> feeling unsupported.</div>
+        <div class="compare-box" style="background:var(--blue-light);border:1px solid #93c5fd;color:#1e3a8a;"><span class="lbl" style="opacity:.8;">Present — interpreting meaning</span>This <strong>suggests</strong> that feedback timing matters.<br>The pattern <strong>aligns</strong> with what Smith (2018) found.</div>
+      </div>
+      <div class="callout success" style="margin-top:10px;"><span class="ico">✅</span><div>Common pattern: <em>"The interviews <strong>showed</strong> that students had problems with citations [past] — this <strong>suggests</strong> that more support is needed [present]."</em></div></div>
+
+      <div class="eyebrow">Conclusion — Present + Future / Modal</div>
+      <div class="example-item">The findings <span class="hl">demonstrate</span> the value of formative feedback in academic writing. <span style="color:var(--gray-400); font-size:11px;">← present tense</span></div>
+      <div class="example-item">Future studies <span class="hl">could explore</span> the long-term effects of peer feedback. <span style="color:var(--gray-400); font-size:11px;">← modal verb</span></div>
+      <p>A common pattern: <em>"This thesis <strong>aimed</strong> to… and <strong>found</strong> that… These results <strong>suggest</strong> that…"</em></p>
+    </section>
+
+    <section class="content-section" id="tense-principles">
+      <div class="subsection-heading">Key Rules</div>
+      <div class="rule-card"><div class="rule-card-title">✅ Mixing tenses is normal</div><p>When your communicative purpose changes, the tense changes too. Reporting a result (past) and then interpreting it (present) are two different actions. Changing tense here is correct — it is not inconsistent.</p></div>
+      <div class="rule-card"><div class="rule-card-title">⚠️ Changing tense without reason is a problem</div><p>Before you change tense, ask: <em>Why am I changing here?</em> If you cannot give a reason, stay in the same tense. Random tense changes make your writing hard to follow.</p></div>
+      <div class="rule-card"><div class="rule-card-title">🎓 Conventions vary by field</div><p>These patterns follow standard academic English. Always check with your supervisor — conventions in science subjects may differ from those in business or the social sciences.</p></div>
+    </section>
+
+
+    <!-- ══════ 6. SOURCES & CITATIONS ══════ -->
+    <section class="content-section" id="cite-sources">
+      <h2 class="section-heading"><span class="section-tag">6</span>Sources &amp; Citations</h2>
+      <p class="section-intro">You must cite all sources you use. This section explains which sources are acceptable and how to cite them correctly in your text.</p>
+
+      <div class="subsection-heading">Finding Good Sources — The CRAAP Test</div>
+      <p>Before you use a source, check these five things:</p>
+      <table class="data-table">
+        <thead><tr><th>Letter</th><th>What to check</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C</strong> — Currency</td><td>When was it published? Is it recent enough for your topic?</td></tr>
+          <tr><td><strong>R</strong> — Relevance</td><td>Does it directly address your research question?</td></tr>
+          <tr><td><strong>A</strong> — Authority</td><td>Who is the author? Is the publication peer-reviewed?</td></tr>
+          <tr><td><strong>A</strong> — Accuracy</td><td>Is the information supported by evidence? Are sources cited?</td></tr>
+          <tr><td><strong>P</strong> — Purpose</td><td>Why was it written? To inform, or to sell something?</td></tr>
+        </tbody>
+      </table>
+      <div class="rule-card" style="margin-top:12px;">
+        <div class="rule-card-title">Sources to avoid</div>
+        <ul>
+          <li><strong>Commercial blogs and company websites</strong> — these aim to promote a product, not provide reliable information</li>
+          <li><strong>Dictionaries and encyclopaedias</strong> (including Wikipedia) — useful for getting started, but not for academic citation</li>
+          <li><strong>Pirated e-books</strong> — if you find a full book as a PDF online, check that it has an open-access licence. If not, find it through LAB Primo instead</li>
+          <li>Pages with no named author where an author would normally be expected</li>
+        </ul>
+      </div>
+      <p>For help finding quality sources: <a href="https://libguides.lut.fi/LABinformationretrieval" target="_blank">LUT/LAB library information retrieval guide →</a></p>
+    </section>
+
+    <section class="content-section" id="cite-mechanics">
+      <div class="subsection-heading">In-Text Citation Rules</div>
+      <table class="data-table">
+        <thead><tr><th>Situation</th><th>Rule</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>One sentence</strong></td><td>Full stop <strong>after</strong> the bracket</td><td><em>Good management helps employees develop competence (Ekholm &amp; Salmenkangas 2015, 35–36).</em></td></tr>
+          <tr><td><strong>Multiple sentences</strong></td><td>Full stop <strong>inside</strong> the bracket</td><td><em>Brand loyalty develops over time. It is closely linked to trust. (Korhonen 2020, 58.)</em></td></tr>
+          <tr><td><strong>Multiple sources</strong></td><td>Chronological order, separated by semicolons</td><td><em>(Siukosaari 2015, 205; Ojanen 2016, 18; Kuutti 2017, 102.)</em></td></tr>
+          <tr><td><strong>Two authors</strong></td><td>Use &amp; — never "and"</td><td><em>(Chang &amp; Nguyen 2011, 13.)</em></td></tr>
+          <tr><td><strong>Three or more authors</strong></td><td>First author + et al. — in the text only</td><td><em>(Jones et al. 2009, 43–45.)</em></td></tr>
+          <tr><td><strong>Narrative citation — year + page</strong></td><td>Put year and page directly after the author's name, not at the end of the sentence</td><td><em>Myers and Kassing (2009, 72) claim that…</em></td></tr>
+          <tr><td><strong>Secondary source</strong></td><td>Name the original author, then the source you read. Only the source you read goes in the reference list.</td><td><em>(Drucker 1954, according to Hamel 2007, 89.)</em></td></tr>
+          <tr><td><strong>No author</strong></td><td>Use the publication title or organisation name</td><td><em>(Finnish Institute for Health and Welfare 2022)</em></td></tr>
+          <tr><td><strong>Same author, same year</strong></td><td>Add lowercase letters after the year — in both the citation and the reference list</td><td><em>(Mäkinen 2021a, 17; Mäkinen 2021b, 45)</em></td></tr>
+          <tr><td><strong>Acts and decrees</strong></td><td>Official name, code, year, and section. No page numbers.</td><td><em>(Biobank Act 688/2012, Section 2.)</em></td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn"><span class="ico">⚠️</span><div><strong>et al. is not allowed in the reference list.</strong> You can use it in in-text citations, but all authors must be named in full in the references list.</div></div>
+    </section>
+
+    <section class="content-section" id="cite-weakstrong">
+      <div class="subsection-heading">Weak vs. Strong Author Citations</div>
+      <p>Every in-text citation can be written in two ways. Your choice signals whether you want to emphasise the author or the information.</p>
+      <table class="data-table">
+        <thead><tr><th></th><th>Weak / Parenthetical</th><th>Strong / Narrative</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Structure</strong></td><td>Author is in the brackets: <em>(Smith 2021, 45)</em></td><td>Author is in the sentence: <em>Smith (2021, 45) argues that…</em></td></tr>
+          <tr><td><strong>Best for</strong></td><td>Most paraphrased passages; when the information matters more than the source</td><td>Definitions; comparing two authors' views; crediting a framework or theory</td></tr>
+          <tr><td><strong>Effect</strong></td><td>Smoother flow; more objective feel</td><td>Source is immediately visible; makes evidence easy to identify</td></tr>
+          <tr><td><strong>Requires</strong></td><td>Nothing extra</td><td>A reporting verb or <em>according to</em></td></tr>
+        </tbody>
+      </table>
+      <div class="example-item" style="margin-top:12px;"><span class="hl">Weak:</span> Differentiation is a tactic where prices reflect a customer's perceived ability to pay (Huefner &amp; Sanders 2012, 27).</div>
+      <div class="example-item"><span class="hl">Strong — definition:</span> Huefner and Sanders (2012, 27) <span class="grn">define</span> differentiation as a tactic where prices reflect a customer's perceived ability to pay.</div>
+      <div class="example-item"><span class="hl">Strong — contrast:</span> Jones (2023b, 25) <span class="grn">notes</span> that sustainable growth is the main goal; however, Huefner and Sanders (2012, 86) <span class="grn">point out</span> that brand licensing brings equal returns.</div>
+      <div class="callout tip"><span class="ico">💡</span><div>Use both styles in your thesis — do not rely on one style only. Varying your citation style makes your writing more readable.</div></div>
+      <div class="tool-links"><a class="tool-link" href="https://hamgued.github.io/html-tools/definitions_weak_strong_author.html" target="_blank">📖 Citation Navigator Tool →</a></div>
+    </section>
+
+    <section class="content-section" id="cite-reporting">
+      <div class="subsection-heading">Reporting Verbs</div>
+      <p>When you use a strong (narrative) citation, the verb you choose signals your attitude toward the source's claim. Choose your verbs carefully — not all verbs mean the same thing.</p>
+
+      <div class="eyebrow">Tentative — the author is cautious or unsure</div>
+      <div class="chip-row">
+        <span class="verb-chip tent">suggest</span><span class="verb-chip tent">hypothesise</span><span class="verb-chip tent">imply</span><span class="verb-chip tent">propose</span><span class="verb-chip tent">speculate</span><span class="verb-chip tent">postulate</span><span class="verb-chip tent">recommend</span>
+      </div>
+      <div class="example-item">Smith (2021) <span class="hl">suggests</span> that remote work may improve productivity in certain contexts.</div>
+
+      <div class="eyebrow" style="margin-top:16px;">Neutral — reporting facts, data, or methods without adding opinion</div>
+      <div class="chip-row">
+        <span class="verb-chip neut">describe</span><span class="verb-chip neut">show</span><span class="verb-chip neut">reveal</span><span class="verb-chip neut">note</span><span class="verb-chip neut">indicate</span><span class="verb-chip neut">report</span><span class="verb-chip neut">observe</span><span class="verb-chip neut">state</span><span class="verb-chip neut">examine</span><span class="verb-chip neut">find</span>
+      </div>
+      <div class="example-item">The study <span class="hl">shows</span> a significant increase in urban migration.</div>
+
+      <div class="eyebrow" style="margin-top:16px;">Strong — the author makes a firm, confident claim</div>
+      <div class="chip-row">
+        <span class="verb-chip str">argue</span><span class="verb-chip str">claim</span><span class="verb-chip str">emphasise</span><span class="verb-chip str">contend</span><span class="verb-chip str">maintain</span><span class="verb-chip str">assert</span><span class="verb-chip str">refute</span><span class="verb-chip str">challenge</span><span class="verb-chip str">deny</span>
+      </div>
+      <div class="example-item">Miller (2020) <span class="hl">argues</span> that the current economic model is unsustainable.</div>
+
+      <div class="eyebrow" style="margin-top:16px;">Grammar rules</div>
+      <div class="compare-grid">
+        <div class="compare-box bad"><span class="lbl">❌ Missing -s (third person)</span>Smith <strong>argue</strong> that… / The study <strong>show</strong> that…</div>
+        <div class="compare-box good"><span class="lbl">✅ Correct</span>Smith <strong>argues</strong> that… / The study <strong>shows</strong> that…</div>
+      </div>
+      <div class="callout tip" style="margin-top:10px;">
+        <span class="ico">💡</span>
+        <div>Use <strong>present tense</strong> (argues, shows, notes) to show the source is still relevant today. Use <strong>past tense</strong> (found, reported) when treating a study as a completed past event — especially when the year appears next to the author's name: <em>"Smith (2018) <strong>found</strong> that…"</em></div>
+      </div>
+      <div class="tool-links"><a class="tool-link" href="https://hamgued.github.io/html-tools/reporting_verbs_master.html" target="_blank">📚 Reporting Verbs Tool →</a></div>
+    </section>
+
+    <section class="content-section" id="cite-quotations">
+      <div class="subsection-heading">Direct Quotations</div>
+      <p>A direct quotation copies the source word for word. Use them only when the exact wording matters — for example, for a legal definition or a key term you are analysing. In most cases, paraphrase instead.</p>
+      <p>At LAB, <strong>do not use quotation marks</strong>. Use italics instead.</p>
+
+      <div class="eyebrow">Short quotation — inside the sentence</div>
+      <div class="rule-card">
+        <p>Integrate the quotation naturally into your sentence. Use italics. No quotation marks.</p>
+        <div class="example-item" style="margin-top:8px; font-style:normal;">Bryson (1990, 240) claims that <em>the countries where strife and violence have been most pronounced are the ones where minority languages have been most strenuously suppressed.</em></div>
+      </div>
+
+      <div class="eyebrow" style="margin-top:16px;">Long quotation — block format</div>
+      <div class="rule-card">
+        <p>Separate from the body text with blank lines before and after. Indent to the next tab stop. Use italics. No quotation marks. Put the reference in brackets after the text.</p>
+        <div style="margin-top:10px; padding: 12px 24px; border-left:3px solid var(--gray-200); font-size:13.5px; color:var(--gray-700); font-style:italic; line-height:1.7;">
+          U.S. English and other such groups maintain that linguistic divisions have caused unrest in several countries, such as Canada and Belgium – though they generally fail to note that the countries where strife and violence have been most pronounced are the ones where minority languages have been most strenuously suppressed. (Bryson 1990, 240.)
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════ 7. REFERENCE LIST ══════ -->
+    <section class="content-section" id="ref-rules">
+      <h2 class="section-heading"><span class="section-tag">7</span>Reference List</h2>
+      <p class="section-intro">Your reference list includes every source you cited in the thesis — nothing more, nothing less. It follows the main body text under the heading <strong>References</strong> (style: LAB Non-numbered).</p>
+
+      <div class="subsection-heading">Rules &amp; Format</div>
+      <div class="rule-card"><ul>
+        <li>Order: <strong>alphabetical A–Z</strong> by first author's surname</li>
+        <li>Every cited source <strong>must</strong> appear; no uncited sources may appear</li>
+        <li>Authors: <strong>Surname, Initial(s).</strong></li>
+        <li>Multiple authors joined with <strong>&amp;</strong> in the same order as in the original source</li>
+        <li><strong>et al. is not allowed</strong> — all authors must be named in full</li>
+        <li>Same author, same year: add lowercase letters — <strong>Jones 2023a</strong>, <strong>Jones 2023b</strong></li>
+        <li><strong>No full stop after a URL or DOI</strong></li>
+        <li>Always include a <strong>retrieval date</strong> for digital sources</li>
+        <li>If access requires login or payment: write <em>Limited availability at</em> instead of <em>Available at</em></li>
+      </ul></div>
+      <div class="tool-links"><a class="tool-link" href="https://hamgued.github.io/html-tools/thesis_guide_tool.html" target="_blank">🔧 Reference Builder Tool →</a></div>
+    </section>
+
+    <section class="content-section" id="ref-types">
+      <div class="subsection-heading">Source Types</div>
+
+      <div class="eyebrow">Printed Book</div>
+      <div class="ref-format"><span class="ph">Surname, I. Year. Title. Place: Publisher.</span></div>
+      <div class="example-item">Johnson, A. 2020. Sustainable Logistics. London: Routledge.</div>
+
+      <div class="eyebrow" style="margin-top:18px;">Journal Article</div>
+      <div class="ref-format"><span class="ph">Surname, I. Year. Article title. Journal Name, Vol. X (Y), pages. Retrieved on [date]. Available at DOI [link]</span></div>
+      <div class="example-item">Loxton, M., Truskett, R., Scarf, B., Sindone, L., Baldry, G. &amp; Zhao, Y. 2020. Consumer Behaviour during Crises. Journal of Risk and Financial Management, Vol. 13 (8), 166. Retrieved on 1 June 2021. Available at DOI 10.3390/jrfm13080166</div>
+      <p style="font-size:12.5px; color:var(--gray-600); margin-top:4px;">Note: 166 here is an article number, not a page number. For magazines, use the full issue date and page range.</p>
+
+      <div class="eyebrow" style="margin-top:18px;">Web Page (with author)</div>
+      <div class="ref-format"><span class="ph">Surname, I. Year. Title. Publisher. Retrieved on [date]. Available at [URL]</span></div>
+      <div class="example-item">Saarinen, T. 2023. Digital Transformation in Supply Chains. LAB University of Applied Sciences. Retrieved on 10 March 2024. Available at https://www.lab.fi/…</div>
+
+      <div class="eyebrow" style="margin-top:18px;">Web Page (no author, no year)</div>
+      <div class="ref-format"><span class="ph">Organisation Name. Page Title. Retrieved on [date]. Available at [URL]</span>
+<span class="cm">/* No year? Simply omit it. Do NOT write "n.d." */</span></div>
+      <div class="example-item">Finnish Institute for Health and Welfare. Mental Health Statistics. Retrieved on 12 August 2024. Available at https://thl.fi/en/…</div>
+
+      <div class="eyebrow" style="margin-top:18px;">Act / Decree</div>
+      <div class="ref-format"><span class="ph">Name of Act Code/Year.</span></div>
+      <div class="example-item">Biobank Act 688/2012.</div>
+
+      <div class="eyebrow" style="margin-top:18px;">Thesis</div>
+      <div class="ref-format"><span class="ph">Surname, I. Year. Title. University. Thesis (degree level). Retrieved on [date]. Available at [URL]</span></div>
+      <div class="example-item">Harjunpää, A. 2022. Yksintyöskentelyn tiedonhallinnan kehittäminen. LAB University of Applied Sciences. Thesis (Master's degree). Retrieved on 2 May 2022. Available at https://urn.fi/URN:NBN:fi:amk-202204195388</div>
+      <p style="font-size:12.5px; color:var(--gray-600); margin-top:4px;">Always use the URN permalink when available — it is permanent.</p>
+
+      <div class="eyebrow" style="margin-top:18px;">Interview (background research only)</div>
+      <div class="ref-format"><span class="ph">Surname, I. Year. Title/Position. Organisation. Interview on [date].</span></div>
+      <div class="example-item">Green, M. 2022. Managing Director. DuraPipes Ltd. Interview on 5 February 2022.</div>
+      <div class="callout warn" style="margin-top:8px;"><span class="ico">⚠️</span><div>Interviews you conducted to collect your own research data are <strong>not listed</strong> in the references — they are kept anonymous.</div></div>
+
+      <div class="eyebrow" style="margin-top:18px;">Article in an Edited Compilation</div>
+      <div class="ref-format"><span class="ph">Surname, I. Year. Article title. In Editor, E. (Eds.). Book Title. Place: Publisher, pages.</span></div>
+      <div class="example-item">Ashkanasy, N. M. 2009. The Australian Enigma. In Chhokar, J. S. &amp; House, R. J. (Eds.). Culture and Leadership Across the World. New York: Psychology Press, 299–334.</div>
+
+      <div class="eyebrow" style="margin-top:18px;">Secondary Source — What goes in the list?</div>
+      <p>If you cite a source through another author's work, only the source you actually read goes in the reference list.</p>
+      <div class="example-item">
+        In-text: (Drucker 1954, according to Hamel 2007, 89.)<br>
+        Reference list: <span class="hl">Hamel 2007 only</span> — not Drucker.
+      </div>
+    </section>
+
+
+    <!-- ══════ 8. VISUALS ══════ -->
+    <section class="content-section" id="vis-types">
+      <h2 class="section-heading"><span class="section-tag">8</span>Visuals</h2>
+      <p class="section-intro">Tables, figures, and images can help the reader understand your research — but only if you follow the rules. A visual that is not discussed in the text should not be in your thesis.</p>
+
+      <div class="subsection-heading">Types &amp; Numbering</div>
+      <table class="data-table">
+        <thead><tr><th>Type</th><th>Caption position</th><th>Example label</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Table</strong></td><td><strong>Above</strong> the table</td><td><em>Table 1. Annual revenue figures (Jones 2021)</em></td></tr>
+          <tr><td><strong>Figure</strong> (diagrams, charts, drawings)</td><td><strong>Below</strong> the figure</td><td><em>Figure 1. Sales volume by quarter (Smith 2022)</em></td></tr>
+          <tr><td><strong>Image</strong> (photos, illustrations)</td><td><strong>Below</strong> the image</td><td><em>Image 1. Warehouse layout (Johnson 2020, 36)</em></td></tr>
+        </tbody>
+      </table>
+      <div class="rule-card"><ul>
+        <li>All visuals are <strong>left-aligned</strong></li>
+        <li>Captions are <strong>not full sentences</strong> — they do not end with a full stop</li>
+        <li>Put a <strong>full stop after the number</strong> in the label: <em>Table 1.</em></li>
+        <li>Every visual must fit on <strong>one page</strong> with its caption — otherwise move it to an appendix</li>
+        <li>Sources for all visuals go in the <strong>main references list</strong> — there is no separate image list</li>
+      </ul></div>
+
+      <div class="eyebrow">Citing visuals</div>
+      <table class="data-table">
+        <thead><tr><th>Situation</th><th>Label format</th></tr></thead>
+        <tbody>
+          <tr><td>Visual from a published source</td><td><em>Figure 3. Supply chain model (Park 2019, 45)</em></td></tr>
+          <tr><td>Visual you created yourself</td><td><em>Figure 4. Interview process (Image: Your Name)</em> — your name is not added to the reference list</td></tr>
+          <tr><td>Visual adapted from a source</td><td><em>Figure 5. Modified supply chain model (adapted from Park 2019, 45)</em></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content-section" id="vis-practice">
+      <div class="subsection-heading">Best Practices</div>
+      <div class="callout error"><span class="ico">❌</span><div><strong>Never start a chapter or section with a visual.</strong> Always begin with a full paragraph of text that introduces the visual before it appears.</div></div>
+      <div class="rule-card">
+        <div class="rule-card-title">The Sandwich Method</div>
+        <ol>
+          <li style="margin-bottom:6px;"><strong>Text before:</strong> Refer to the visual by number in the paragraph before it — <em>"The distribution of responses is shown in Figure 2."</em></li>
+          <li style="margin-bottom:6px;"><strong>The visual</strong> (table, figure, or image)</li>
+          <li><strong>Text after:</strong> Analyse what the visual shows. Do not just describe it — explain what it means for your research.</li>
+        </ol>
+      </div>
+      <div class="callout warn"><span class="ico">⚠️</span><div>Do not place two visuals back-to-back without text between them.</div></div>
+
+      <div style="margin-top:20px; padding:20px; background:var(--blue-light); border-radius:var(--radius); border:1px solid #93c5fd;">
+        <div style="font-size:13px; font-weight:700; color:var(--blue-dark); margin-bottom:10px;">🔗 Practice with the interactive tools</div>
+        <div class="tool-links" style="margin:0;">
+          <a class="tool-link" href="https://hamgued.github.io/html-tools/thesis_guide_tool.html" target="_blank">📋 Thesis Guidebook</a>
+          <a class="tool-link" href="https://hamgued.github.io/html-tools/reporting_verbs_master.html" target="_blank">📚 Reporting Verbs</a>
+          <a class="tool-link" href="https://hamgued.github.io/html-tools/definitions_weak_strong_author.html" target="_blank">📖 Citation Navigator</a>
+          <a class="tool-link" href="https://hamgued.github.io/html-tools/signposting.html" target="_blank">🗂 Signposting</a>
+          <a class="tool-link" href="https://hamgued.github.io/html-tools/thesis-tense-guide.html" target="_blank">🕐 Tense Guide</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══════ 9. COMMON FEEDBACK ══════ -->
+    <section class="content-section" id="fb-referencing">
+      <h2 class="section-heading"><span class="section-tag">9</span>Common Feedback</h2>
+      <p class="section-intro">These are the mistakes that appear most often in student theses. Check your own writing against each point before submitting. Every item includes a clear before-and-after example.</p>
+
+      <p><em>All feedback points follow the LAB University of Applied Sciences Thesis Guidebook (August 2025 edition).</em></p>
+
+      <div class="subsection-heading">Referencing Mistakes</div>
+
+      <p><strong>Use LAB referencing style — not APA or Harvard.</strong> Check all your citations and reference list entries against chapters 7.3 and 7.4 of the Thesis Guidebook.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>(Johnson, A., 2020, pp. 34–36)</td><td>(Johnson 2020, 34–36)</td></tr>
+        <tr><td>Johnson, A. (2020). Sustainable Logistics. Routledge.</td><td>Johnson, A. 2020. Sustainable Logistics. London: Routledge.</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Every claim needs a source.</strong> Phrases like "recent studies show" or "many researchers argue" are not acceptable without actual citations. Name the studies and cite them.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Research has increasingly shown that remote work improves employee wellbeing.</td><td>Research has increasingly shown that remote work improves employee wellbeing (Hakanen 2021, 44; Virtanen &amp; Bloom 2023, 112).</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Match your citations and references in both directions.</strong> Every in-text citation must have a matching entry in the references list — and every entry in the list must be cited in the text.</p>
+
+      <p style="margin-top:16px;"><strong>Check these details in every citation:</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>(Park and Laine and Costa 2022, 8) — "and" between authors</td><td>(Park et al. 2022, 8) — use et al. for three or more authors</td></tr>
+        <tr><td>(Virtanen 2023; Hakanen 2019) — wrong order</td><td>(Hakanen 2019; Virtanen 2023) — always chronological order</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Same author, same year — add a letter.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>(Mäkinen 2021, 17; Mäkinen 2021, 45)</td><td>(Mäkinen 2021a, 17; Mäkinen 2021b, 45)</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Multiple sentences — move the full stop inside the bracket.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Brand loyalty develops over time. It is closely linked to customer trust. (Korhonen 2020, 58).</td><td>Brand loyalty develops over time. It is closely linked to customer trust. (Korhonen 2020, 58.)</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>If you could not find the original source, use the secondary source format.</strong> Only the source you actually read goes in the references list.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>(Drucker 1954, 12) — when you only read Hamel 2007</td><td>(Drucker 1954, according to Hamel 2007, 89.)</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>No author or no year — here is what to do.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>(n.d.) or (Unknown 2019)</td><td>(Finnish Institute for Health and Welfare 2022) — use organisation name and year</td></tr>
+        <tr><td>(Finnish Institute for Health and Welfare n.d.) — if no year found</td><td>(Finnish Institute for Health and Welfare) — simply omit the year; do NOT write n.d.</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Reference list: always name all authors.</strong> et al. is forbidden in the references list.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Saarinen, T. et al. 2021. Supply Chain Resilience…</td><td>Saarinen, T., Leinonen, M., Peltonen, R. &amp; Virtanen, K. 2021. Supply Chain Resilience…</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Digital sources: always include a retrieval date. No full stop after the URL.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Available at https://www.stat.fi/index_en.html.</td><td>Retrieved on 3 February 2024. Available at https://www.stat.fi/index_en.html</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Use both citation styles — not just one.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Entire thesis uses only parenthetical (weak author) citations throughout.</td><td>Lean (2012, 44) notes that supply chains are vulnerable to single points of failure. This is consistent with findings on inventory risk (Park et al. 2019, 78; Virtanen 2021, 33).</td></tr>
+      </tbody></table>
+    </section>
+
+    <section class="content-section" id="fb-concepts">
+      <div class="subsection-heading">Concepts &amp; Terms</div>
+
+      <p><strong>Define every key term you use repeatedly.</strong> If you use a concept as though it is an established academic term, show where your definition comes from.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Digital transformation is a key driver of modern business.</td><td>Digital transformation refers to the integration of digital technologies into all areas of a business, fundamentally changing how it operates and delivers value (Westerman et al. 2014, 10).</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Use the correct label for what something is.</strong> A model, a framework, an instrument, and a theory are not the same thing. Check what your sources actually call it.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>The Technology Acceptance Model is a theoretical framework that explains user behaviour.</td><td>The Technology Acceptance Model is a model that explains how users come to accept and use technology (Davis 1989, 320).</td></tr>
+      </tbody></table>
+    </section>
+
+    <section class="content-section" id="fb-structure">
+      <div class="subsection-heading">Structure &amp; Layout</div>
+
+      <p><strong>No body text directly under a main chapter heading.</strong> The first thing after a chapter heading must be a sub-heading (see Thesis Guidebook, section 6.3).</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>2. Literature Review<br>This section reviews the key concepts…<br>2.1 Customer Experience</td><td>2. Literature Review<br>(no text here)<br>2.1 Customer Experience</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>You must have at least two sub-sections at the same level.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>3. Market Analysis<br>3.1 Competitor Overview<br>(3.2 is missing)</td><td>3. Market Analysis<br>3.1 Competitor Overview<br>3.2 Customer Segments</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Heading numbers do not end with a full stop.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>2.1. Literature Review</td><td>2.1 Literature Review</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Add at least one paragraph between a Heading 2 and a Heading 3.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>2.1 Digital Marketing<br>2.1.1 Social Media<br>(no text between them)</td><td>2.1 Digital Marketing<br>[at least one paragraph of text]<br>2.1.1 Social Media</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Label and number every visual. Use the correct format.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Figure 1 Thesis structure (no full stop after number)</td><td>Figure 1. Thesis structure</td></tr>
+        <tr><td>Figure 3. This figure presents the results of the survey. (full sentence)</td><td>Figure 3. Survey results by age group (not a full sentence)</td></tr>
+        <tr><td>Figure 3. Supply chain model (no source cited)</td><td>Figure 3. Supply chain model (Park 2019, 45)</td></tr>
+        <tr><td>(modified figure, no attribution)</td><td>Figure 4. Modified supply chain model (adapted from Park 2019, 45)</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Refer to every visual by number in the text before it appears.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Figure 2 appears with no mention in the preceding text.</td><td>The distribution of responses across age groups is shown in Figure 2.</td></tr>
+        <tr><td>Table 4 appears, immediately followed by Table 5 with no text between them.</td><td>[Paragraph introducing Table 4] → Table 4 → [Analysis of Table 4] → [Paragraph introducing Table 5] → Table 5</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Be consistent with heading capitalisation.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor — mixed styles</th><th>✅ Good — consistent</th></tr></thead><tbody>
+        <tr><td>2.1 Customer Experience in Digital Services (title case)<br>2.2 Factors affecting customer loyalty (sentence case)</td><td>Title case throughout: 2.1 Customer Experience / 2.2 Factors Affecting Customer Loyalty<br><br>— OR —<br><br>Sentence case throughout: 2.1 Customer experience / 2.2 Factors affecting customer loyalty</td></tr>
+      </tbody></table>
+    </section>
+
+    <section class="content-section" id="fb-language">
+      <div class="subsection-heading">Language &amp; Style</div>
+
+      <p><strong>Choose reporting verbs carefully.</strong> "Argue" signals a contested opinion. If the source is just reporting data or findings, use a neutral verb.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Korhonen (2022, 19) argues that 74% of Finnish consumers prefer mobile payments. (a statistic is not a contested claim)</td><td>Korhonen (2022, 19) reports that 74% of Finnish consumers prefer mobile payments.</td></tr>
+        <tr><td>Laine et al. (2021, 55) argue that job satisfaction correlates with productivity. (a well-established finding)</td><td>Laine et al. (2021, 55) found a positive correlation between job satisfaction and productivity.</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Use the correct tense in the empirical section.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>The interviews are conducted in April 2024 with six participants. (present instead of past)</td><td>The interviews were conducted in April 2024 with six participants.</td></tr>
+        <tr><td>The questionnaire included 18 items that measures customer loyalty. (wrong tense in relative clause)</td><td>The questionnaire included 18 items that measure customer loyalty.</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Use the same terminology throughout your whole thesis.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>user experience … UX … User Experience (three different forms in the same thesis)</td><td>user experience (used consistently; UX only if defined and introduced first)</td></tr>
+        <tr><td>blockchain … Blockchain … block chain (three different spellings)</td><td>blockchain (used consistently throughout)</td></tr>
+      </tbody></table>
+    </section>
+
+    <section class="content-section" id="fb-conventions">
+      <div class="subsection-heading">Writing Conventions</div>
+
+      <p><strong>Avoid over-complicated or overly passive constructions.</strong> Prefer clear, direct phrasing.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>A comparison of the two methods was carried out by the authors.</td><td>We compared the two methods.</td></tr>
+        <tr><td>The collection of survey data took place in spring 2024.</td><td>We collected the data in spring 2024.</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Remove vague filler phrases.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>In the context of the present study, brand awareness was investigated.</td><td>This study investigated brand awareness.</td></tr>
+        <tr><td>Within the framework of this research, three hypotheses were tested.</td><td>This research tested three hypotheses.</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Every chapter must have at least two paragraphs. Every paragraph must have at least two sentences.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>4. Results<br>"The results are presented in this chapter." (one sentence only)</td><td>4. Results<br>"This chapter presents the findings from the survey and interviews. The results are organised according to the three research questions." (then continues with subsections)</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Lists need an introduction. Bullets must be parallel and correctly punctuated.</strong></p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>• Cost reduction,<br>• Faster delivery,<br>• Higher accuracy.<br>(no introduction; commas after bullets)</td><td>The proposed solution offers three main benefits:<br>• cost reduction<br>• faster delivery<br>• higher accuracy.</td></tr>
+        <tr><td>The platform offers the following features:<br>• users can log in securely<br>• fast data export<br>• the interface is customisable<br>(grammatically inconsistent bullets)</td><td>The platform offers the following features:<br>• secure login<br>• fast data export<br>• customisable interface</td></tr>
+      </tbody></table>
+
+      <p style="margin-top:16px;"><strong>Avoid direct quotations unless the exact wording is essential.</strong> Paraphrasing shows that you understood the source. When you do quote, use italics — not quotation marks.</p>
+      <table class="fb-table"><thead><tr><th>❌ Poor</th><th>✅ Good</th></tr></thead><tbody>
+        <tr><td>Kotler (2016, 45) states that "marketing is about creating value for customers." (no real reason to quote)</td><td>Kotler (2016, 45) argues that marketing centres on creating customer value through products and services tailored to specific needs.</td></tr>
+        <tr><td>Short quotation not in italics.</td><td>Short quotations inside a sentence must be in italics: The Act provides that <em>every person is entitled to health care required by his state of health</em> (Act on the Status and Rights of Patients 785/1992, Section 3.)</td></tr>
+      </tbody></table>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="page-footer">
+  Thesis Writing — Student Guidebook &nbsp;·&nbsp;
+  <a href="https://www.linkedin.com/in/hagu1/" target="_blank">Hamid Guedra</a> &nbsp;·&nbsp;
+  <a href="https://lab.fi/en" target="_blank">LAB University of Applied Sciences</a>
+</footer>
+
+<script>
+  /* Mobile TOC toggle */
+  const tocToggle = document.getElementById('tocToggle');
+  const mobileToc = document.getElementById('mobileToc');
+  tocToggle.addEventListener('click', () => {
+    mobileToc.classList.toggle('open');
+    tocToggle.textContent = mobileToc.classList.contains('open') ? '✕ Close' : '☰ Contents';
+  });
+  function closeMobileToc() {
+    mobileToc.classList.remove('open');
+    tocToggle.textContent = '☰ Contents';
+  }
+
+  /* Active sidebar link via IntersectionObserver */
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const sections = document.querySelectorAll('section[id]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+        if (link) {
+          link.classList.add('active');
+          link.scrollIntoView({ block: 'nearest' });
+        }
+      }
+    });
+  }, { rootMargin: '-8% 0px -82% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+
+  /* Smooth scroll */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
